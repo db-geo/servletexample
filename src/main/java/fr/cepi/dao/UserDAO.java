@@ -2,7 +2,7 @@ package fr.cepi.dao;
 
 import fr.cepi.CepiException;
 import fr.cepi.bean.Utilisateur;
-import fr.cepi.service.DatabaseService;
+import fr.cepi.service.CepiService;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -32,7 +32,7 @@ public class UserDAO {
     public Utilisateur login(String login, String password) throws CepiException {
         // Sinon, on recherche l'utilisateur en base de données
         try {
-            Connection con = DatabaseService.getConnection();
+            Connection con = CepiService.getConnection();
             try (PreparedStatement ps = con.prepareStatement(
                     "SELECT * FROM utilisateur WHERE login = ?")) {
                 ps.setString(1, login);
@@ -65,7 +65,7 @@ public class UserDAO {
      */
     public void save(Utilisateur user, String password) throws CepiException {
         try {
-            Connection con = DatabaseService.getConnection();
+            Connection con = CepiService.getConnection();
             try (PreparedStatement ps = con.prepareStatement("INSERT INTO utilisateur(nom, login, salt, password) VALUES (?, ?, ?, ?)")) {
                 ps.setString(1, user.getNom());
                 ps.setString(2, user.getLogin());
@@ -78,7 +78,26 @@ public class UserDAO {
                 ps.execute();
             }
         } catch (Exception e) {
-            throw new CepiException("Erreur lors de l'interrogation d'un utilisateur", e);
+            throw new CepiException("Erreur lors de la création d'un utilisateur", e);
+        }
+    }
+
+
+    /**
+     * Supprime un utilisateur en base de données à partir de son login
+     *
+     * @param login de l'utilisateur à supprimer
+     * @throws CepiException en cas d'erreur lors de l'exécution de la requête
+     */
+    public void delete(String login) throws CepiException {
+        try {
+            Connection con = CepiService.getConnection();
+            try (PreparedStatement ps = con.prepareStatement("DELETE FROM utilisateur WHERE login = ?")) {
+                ps.setString(1, login);
+                ps.execute();
+            }
+        } catch (Exception e) {
+            throw new CepiException("Erreur lors de la suppression d'un utilisateur", e);
         }
     }
 
@@ -91,7 +110,6 @@ public class UserDAO {
      * @return le hash du mot de passe
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
-     * @throws SQLException
      */
     private byte[] hashPassword(byte[] salt, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         // Augmenter iteration count pour plus de sécurité

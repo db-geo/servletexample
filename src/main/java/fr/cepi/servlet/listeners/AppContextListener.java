@@ -1,21 +1,13 @@
 package fr.cepi.servlet.listeners;
 
-import fr.cepi.service.DatabaseService;
+import fr.cepi.service.CepiService;
+import fr.cepi.servlet.LoginServlet;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
-import org.apache.commons.dbcp2.*;
-import org.apache.commons.pool2.ObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.ConfigurationSource;
-import org.apache.logging.log4j.core.config.Configurator;
-
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.sql.DriverManager;
-import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Listener déclencher lors de l'initialisation deu contexte de l'application : configure le logger et initialise le
@@ -33,19 +25,18 @@ public class AppContextListener implements ServletContextListener {
 
         // Initialisation du pool de connexion
         try {
-            Properties props = new Properties();
-            props.load(new FileReader(webAppPath + "WEB-INF/db.properties"));
-            setupDriver(props);
-            DatabaseService.getConnection();
+            CepiService.setupDriver(webAppPath + "WEB-INF/db.properties");
+            CepiService.getConnection();
             System.out.println("Test connexion base de données : OK");
         } catch (Exception e) {
             System.err.println("Connexion base de données : KO. " + e.getMessage());
         }
 
         // initialisation de log4j2
-        String log4jProp = webAppPath + "WEB-INF/log4j2.xml";
-        try (LoggerContext ignored = Configurator.initialize(null,
-                new ConfigurationSource(new FileInputStream(log4jProp)))) {
+        try {
+            CepiService.setupLogger(webAppPath + "WEB-INF/db.properties");
+            Logger logger = LogManager.getLogger(LoginServlet.class);
+            logger.info("Logger initialisé");
             System.out.println("Configuration log4j : OK");
         } catch (Exception e) {
             System.err.println("Connection log4j : KO. " + e.getMessage());
@@ -55,31 +46,11 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         try {
-            destroyDriver();
+            CepiService.destroyDriver();
         } catch (Exception ignored) {
         }
     }
 
-    /**
-     * Crée un driver JDBC pour un pool de connexion nommé
-     * "jdbc:apache:commons:dbcp:MyPool"
-     */
-    public static void setupDriver(Properties properties) throws Exception {
 
-        ConnectionFactory cf = new DriverManagerConnectionFactory(properties.getProperty("url"), properties);
-        PoolableConnectionFactory pcf = new PoolableConnectionFactory(cf, null);
-        ObjectPool<PoolableConnection> op = new GenericObjectPool<>(pcf);
-        pcf.setPool(op);
-        Class.forName("org.apache.commons.dbcp2.PoolingDriver");
-        Class.forName(properties.getProperty("driver"));
-        PoolingDriver driver = (PoolingDriver) DriverManager.getDriver("jdbc:apache:commons:dbcp:");
-        driver.registerPool("MyPool", op);
-        System.out.println("Initialisation pool de connexion : OK");
-    }
-
-    public static void destroyDriver() throws Exception {
-        PoolingDriver driver = (PoolingDriver) DriverManager.getDriver("jdbc:apache:commons:dbcp:");
-        driver.closePool("MyPool");
-    }
 
 }
