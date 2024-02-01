@@ -1,3 +1,5 @@
+package fr.cepi.test;
+
 import fr.cepi.CepiException;
 import fr.cepi.bean.Utilisateur;
 import fr.cepi.dao.UserDAO;
