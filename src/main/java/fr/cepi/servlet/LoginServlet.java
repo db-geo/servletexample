@@ -37,10 +37,10 @@ public class LoginServlet extends HttpServlet {
 
         // Quelques contrôles
         String errorMsg = null;
-        if (login == null || login.equals("")) {
+        if (login == null || login.isEmpty()) {
             errorMsg = "Le login est obligatoire";
         }
-        if (password == null || password.equals("")) {
+        if (password == null || password.isEmpty()) {
             errorMsg = "Le mot de passe est obligatoire";
         }
         // S'il y a des erreurs, on met le message en attribut de la requête et on renvoie sur la page de login

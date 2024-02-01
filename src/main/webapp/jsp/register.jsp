@@ -7,16 +7,22 @@
             <%@ include file="template/alerts.jsp"%>
             <form action="Register" method="post">
                 <div class="form-group">
-                    <input name="login" type="text" class="form-control"
-                           placeholder="Login" value=""/>
+                    <label>
+                        <input name="login" type="text" class="form-control"
+                               placeholder="Login" value=""/>
+                    </label>
                 </div>
                 <div class="form-group">
-                    <input name="password" type="password" class="form-control"
-                           placeholder="Mot de passe" value=""/>
+                    <label>
+                        <input name="password" type="password" class="form-control"
+                               placeholder="Mot de passe" value=""/>
+                    </label>
                 </div>
                 <div class="form-group">
-                    <input name="nom" type="txt" class="form-control"
-                           placeholder="Nom" value=""/>
+                    <label>
+                        <input name="nom" type="text" class="form-control"
+                               placeholder="Nom" value=""/>
+                    </label>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btnSubmit" value="Enregistrer"/>

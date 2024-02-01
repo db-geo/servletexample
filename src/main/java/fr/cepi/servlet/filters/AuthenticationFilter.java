@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Filtre appliqué sur toutes les URL : vérifie que l'utilisateur est authentifié pour accéder à toutes les pages sauf
  * /, /Login et /Registrer. <br/>
- * L'accès aux fichiers des répertoires css et images est également permis sans être authentifié.
+ * L'accès aux fichiers du répertoire css est également permis sans être authentifié.
  */
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
@@ -23,7 +23,7 @@ public class AuthenticationFilter implements Filter {
     private final Logger logger = LogManager.getLogger(AuthenticationFilter.class);
 
     @Override
-    public void init(FilterConfig fConfig) throws ServletException {
+    public void init(FilterConfig fConfig) {
         logger.info("Initialisation du filtre d'Authentification");
     }
 
@@ -38,7 +38,7 @@ public class AuthenticationFilter implements Filter {
         // Extraction de la partie suivant le contexte de l'applicaiton dans l'URL, sans le / final
         String path = req.getRequestURI().substring(req.getContextPath().length()).replaceAll("/+$", "");
         // OK pour fichiers du réperotire css
-        if (path.startsWith("/css/") ||path.startsWith("/images/")) {
+        if (path.startsWith("/css/")) {
             // poursuit par le prochain filtre
             chain.doFilter(request, response);
             return;
@@ -56,9 +56,4 @@ public class AuthenticationFilter implements Filter {
             chain.doFilter(request, response);
         }
     }
-
-    @Override
-    public void destroy() {
-    }
-
 }

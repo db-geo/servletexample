@@ -10,8 +10,8 @@ public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 6297385302078200511L;
 
     private int id;
-    private String nom;
-    private String login;
+    private final String nom;
+    private final String login;
 
 
     public Utilisateur(String nom, String login) {
@@ -24,22 +24,12 @@ public class Utilisateur implements Serializable {
         this.id = id;
     }
 
-    public int getId() {
-        return id;
-    }
-
-
     public String getNom() {
         return nom;
     }
 
     public String getLogin() {
         return login;
-    }
-
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
 

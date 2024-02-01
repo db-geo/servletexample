@@ -24,8 +24,8 @@ public class UserDAO {
     /**
      * Interrogation d'un utilisateur par son login et vérification de son mot de passe
      *
-     * @param login
-     * @param password
+     * @param login login de l'utilisateur
+     * @param password mot de passe de l'utilisateur
      * @return l'utilisateur trouvé ou null s'il n'existe pas
      * @throws CepiException en cas d'erreur lors de l'exécution de la requête
      */
@@ -34,12 +34,11 @@ public class UserDAO {
         try {
             Connection con = DatabaseService.getConnection();
             try (PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM utilisateur WHERE login = ?");) {
+                    "SELECT * FROM utilisateur WHERE login = ?")) {
                 ps.setString(1, login);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         // Si on l'a trouvé, on vérifie son mot de passe
-                        SecureRandom random = new SecureRandom();
                         byte[] salt = rs.getBytes("salt");
                         byte[] hash = hashPassword(salt, password);
                         // Est-ce que le hash du mot de passe fourni est le même que celui enregistré en base ?
@@ -60,7 +59,8 @@ public class UserDAO {
     /**
      * Enregistrement d'un nouvel utilisateur en base de données
      *
-     * @param user
+     * @param user utilisateur à créer
+     * @param password mot de passe
      * @throws CepiException en cas d'erreur lors de l'exécution de la requête
      */
     public void save(Utilisateur user, String password) throws CepiException {
@@ -86,14 +86,14 @@ public class UserDAO {
     /**
      * Renvoie le hash d'un mot de passe avec du sel
      *
-     * @param salt
-     * @param password
-     * @return
+     * @param salt sel
+     * @param password mot de passe
+     * @return le hash du mot de passe
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
      * @throws SQLException
      */
-    private byte[] hashPassword(byte[] salt, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
+    private byte[] hashPassword(byte[] salt, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         // Augmenter iteration count pour plus de sécurité
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 1024, 128);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
