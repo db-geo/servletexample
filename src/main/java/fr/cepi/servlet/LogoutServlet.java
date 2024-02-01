@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 /**
- * Servlet pour la déconnection d'un utilisateur
+ * Servlet pour la déconnexion d'un utilisateur
  */
 @WebServlet("/Logout")
 public class LogoutServlet extends HttpServlet {

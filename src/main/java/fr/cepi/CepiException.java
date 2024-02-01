@@ -4,6 +4,9 @@ import fr.cepi.servlet.LoginServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Exception spécifique à l'application qui log les erreurs
+ */
 public class CepiException extends Exception {
 
     static Logger logger = LogManager.getLogger(LoginServlet.class);

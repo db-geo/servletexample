@@ -17,10 +17,12 @@ import java.io.FileReader;
 import java.sql.DriverManager;
 import java.util.Properties;
 
+/**
+ * Listener déclencher lors de l'initialisation deu contexte de l'application : configure le logger et initialise le
+ * pool de connexions
+ */
 @WebListener
 public class AppContextListener implements ServletContextListener {
-
-
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {

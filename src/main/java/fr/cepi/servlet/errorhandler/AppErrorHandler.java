@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Gestionnaire des pages d'erreur
+ */
 @WebServlet("/AppErrorHandler")
 public class AppErrorHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
