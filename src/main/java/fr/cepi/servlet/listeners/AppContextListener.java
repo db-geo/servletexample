@@ -34,7 +34,7 @@ public class AppContextListener implements ServletContextListener {
 
         // initialisation de log4j2
         try {
-            CepiService.setupLogger(webAppPath + "WEB-INF/db.properties");
+            CepiService.setupLogger(webAppPath + "WEB-INF/log4j2.xml");
             Logger logger = LogManager.getLogger(LoginServlet.class);
             logger.info("Logger initialisé");
             System.out.println("Configuration log4j : OK");
