@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="servletexample">
+    <output-path>$PROJECT_DIR$/out/artifacts/servletexample</output-path>
+    <root id="archive" name="servletexample.war">
+      <element id="javaee-facet-resources" facet="servletexample.main/web/Web Gradle : servletexample-1.0-SNAPSHOT.war" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="javaee-facet-classes" facet="servletexample.main/web/Web Gradle : servletexample-1.0-SNAPSHOT.war" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

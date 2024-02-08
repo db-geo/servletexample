@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
     @Override
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         // S'il y a des erreurs, on met le message en attribut de la requête et on renvoie sur la page de login
         if (errorMsg != null) {
             request.setAttribute("errorMessage", errorMsg);
-            getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
         } else {
             // Sinon, on recherche l'utilisateur en base de données
             try {
@@ -63,12 +63,12 @@ public class LoginServlet extends HttpServlet {
                     // Sinon, message d'erreur dans la requête pour affichage dans la vue login.jsp.
                     logger.error("Utilisateur introuvable : " + login);
                     request.setAttribute("errorMessage", "Combinaison incorrecte.");
-                    getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                    getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
                 }
             } catch (CepiException e) {
                 // Sinon renvoie sur la vue login.jsp avec un message d'erreur
                 request.setAttribute("errorMessage", "Erreur technique : veuillez contacter l'administrateur de l'application.");
-                getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             }
         }
     }

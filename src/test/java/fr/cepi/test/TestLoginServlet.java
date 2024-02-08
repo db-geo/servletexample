@@ -54,7 +54,7 @@ public class TestLoginServlet extends Mockito {
         servlet.init(config);
         when(servlet.getServletContext()).thenReturn(context);
 
-        when(servlet.getServletContext().getRequestDispatcher("/jsp/login.jsp")).thenReturn(dispatcherLogin);
+        when(servlet.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp")).thenReturn(dispatcherLogin);
 
         // Avec des identifiants qui n'existent pas
         when(request.getParameter("login")).thenReturn("user");

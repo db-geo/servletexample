@@ -24,7 +24,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/jsp/register.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
         // S'il y a des erreurs, on met le message en attribut de la requête et on renvoie sur la page de login
         if (errorMsg != null) {
             request.setAttribute("errorMessage", errorMsg);
-            getServletContext().getRequestDispatcher("/jsp/register.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);
         } else {
             try {
                 Utilisateur user = new Utilisateur(nom, login);
@@ -57,11 +57,11 @@ public class RegisterServlet extends HttpServlet {
                 // On affiche la page d'accueil
                 request.setAttribute("message",
                         "Enregistrement effectué avec succès, veuillez vous identifier.");
-                getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
             } catch (CepiException e) {
                 // Sinon, log de l'erreur et renvoi sur la vue login.jsp avec un message d'erreur
                 request.setAttribute("errorMessage", "Erreur technique : veuillez contacter l'administrateur de l'application.");
-                getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/WEB-INF/WEB-INF/jsp/login.jsp").forward(request, response);
             }
         }
     }
