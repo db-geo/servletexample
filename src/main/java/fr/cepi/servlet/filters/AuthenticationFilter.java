@@ -37,8 +37,8 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = req.getSession(false);
         // Extraction de la partie suivant le contexte de l'applicaiton dans l'URL, sans le / final
         String path = req.getRequestURI().substring(req.getContextPath().length()).replaceAll("/+$", "");
-        // OK pour fichiers du réperotire css
-        if (path.startsWith("/css/")) {
+        // OK pour fichiers du répertoire css ou pour firstServlet
+        if (path.startsWith("/css/") || path.endsWith("/firstServlet")) {
             // poursuit par le prochain filtre
             chain.doFilter(request, response);
             return;
@@ -50,7 +50,7 @@ public class AuthenticationFilter implements Filter {
         if (!authorizedServlets.contains(path) && !isAuthenticated) {
             System.out.println("Session null");
             // Affichage de la page de connexion
-            req.getServletContext().getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+            req.getServletContext().getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
         } else {
             // poursuit par le prochain filtre
             chain.doFilter(request, response);
