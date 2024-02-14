@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 /** Classe de test de la classe UserDao */
 public class UserDaoTest {
 
-    private static UserDAO dao;
 
     /**
      * Initialisation du pool de connexion et création du DAO
@@ -20,7 +19,7 @@ public class UserDaoTest {
     public static void init()  {
         try {
             CepiService.setupDriver("src/main/webapp/WEB-INF/db.properties");
-            dao = new UserDAO();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -32,11 +31,11 @@ public class UserDaoTest {
      */
     @Test
     public void test() throws CepiException {
-        dao.save(new Utilisateur("a", "b"), "abc");
-        Assertions.assertNotNull(dao.login("b", "abc"));
-        Assertions.assertNull(dao.login("a", "abc"));
-        Assertions.assertNull(dao.login("b", "aaa"));
-        dao.delete("b");
-        Assertions.assertNull(dao.login("b", "abc"));
+        UserDAO.INSTANCE.save(new Utilisateur("a", "b"), "abc");
+        Assertions.assertNotNull(UserDAO.INSTANCE.login("b", "abc"));
+        Assertions.assertNull(UserDAO.INSTANCE.login("a", "abc"));
+        Assertions.assertNull(UserDAO.INSTANCE.login("b", "aaa"));
+        UserDAO.INSTANCE.delete("b");
+        Assertions.assertNull(UserDAO.INSTANCE.login("b", "abc"));
     }
 }

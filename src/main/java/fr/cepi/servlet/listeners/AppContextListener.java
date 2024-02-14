@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Listener déclencher lors de l'initialisation deu contexte de l'application : configure le logger et initialise le
+ * Listener déclencher lors de l'initialisation du contexte de l'application : configure le logger et initialise le
  * pool de connexions
  */
 @WebListener

@@ -13,14 +13,13 @@ import java.security.spec.KeySpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 
 /**
  * Classe d'accès à la table utilisateur en base de données
  */
-public class UserDAO {
-
+public enum UserDAO {
+    INSTANCE;
     /**
      * Interrogation d'un utilisateur par son login et vérification de son mot de passe
      *

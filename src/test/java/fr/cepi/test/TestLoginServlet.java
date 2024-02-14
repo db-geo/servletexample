@@ -10,14 +10,10 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 /**
  * Exemple de test des Servlets avec mockito
@@ -45,8 +41,8 @@ public class TestLoginServlet extends Mockito {
 
             CepiService.setupDriver("src/main/webapp/WEB-INF/db.properties");
             // Crée un user aaa
-            Connection con = CepiService.getConnection();
-            new UserDAO().save(new Utilisateur("aaa", "aaa"), "bbb");
+            CepiService.getConnection();
+            UserDAO.INSTANCE.save(new Utilisateur("aaa", "aaa"), "bbb");
         }
 
 
@@ -76,7 +72,7 @@ public class TestLoginServlet extends Mockito {
         verify(request, atLeast(1)).getParameter("password");
 
         // Cleanup
-        new UserDAO().delete("aaa");
+        UserDAO.INSTANCE.delete("aaa");
 
     }
 }

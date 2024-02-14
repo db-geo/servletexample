@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Classe proposant des services transverses pour l'applicaition
+ * Classe proposant des services transverses pour l'application
  */
 public class CepiService {
 

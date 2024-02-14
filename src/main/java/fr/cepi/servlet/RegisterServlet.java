@@ -52,7 +52,7 @@ public class RegisterServlet extends HttpServlet {
         } else {
             try {
                 Utilisateur user = new Utilisateur(nom, login);
-                new UserDAO().save(user, password);
+                UserDAO.INSTANCE.save(user, password);
                 logger.info("Utilisateur enregistré avec le login " + login);
                 // On affiche la page d'accueil
                 request.setAttribute("message",

@@ -1,7 +1,6 @@
 package fr.cepi.servlet;
 
 import fr.cepi.servlet.filters.AuthenticationFilter;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.apache.logging.log4j.LogManager;

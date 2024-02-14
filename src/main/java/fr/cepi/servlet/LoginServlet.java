@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // récupérations des paramètres de la requêtes : ici les champs input du formulaire
+        // récupération des paramètres de la requête : ici les champs input du formulaire
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             // Sinon, on recherche l'utilisateur en base de données
             try {
-                Utilisateur user = new UserDAO().login(login, password);
+                Utilisateur user = UserDAO.INSTANCE.login(login, password);
                 if (user!=null) {
                     // Si on l'a trouvé, on l'indique dans le log
                     logger.info("Utilisateur trouvé :" + user);
