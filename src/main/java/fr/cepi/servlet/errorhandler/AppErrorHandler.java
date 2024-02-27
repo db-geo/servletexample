@@ -1,10 +1,13 @@
 package fr.cepi.servlet.errorhandler;
 
 
+import fr.cepi.servlet.LoginServlet;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +18,8 @@ import java.io.PrintWriter;
 @WebServlet("/AppErrorHandler")
 public class AppErrorHandler extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    static Logger logger = LogManager.getLogger(AppErrorHandler.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -58,7 +63,7 @@ public class AppErrorHandler extends HttpServlet {
             out.write("<li>Exception message:" + throwable.getMessage() + "</li>");
             out.write("</ul>");
         }
-        throwable.printStackTrace();
+        logger.error("Erreur", throwable);
 
         out.write("<br><br>");
         out.write("<a href=\"" + request.getContextPath() + "\">Page d'accueil</a>");

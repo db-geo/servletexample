@@ -27,7 +27,7 @@ public class UserDaoTest {
 
     /**
      * Test de création, login et suppression d'un utilisateur
-     * @throws CepiException
+     * @throws CepiException en cas d'erreur d'accès à la base de données
      */
     @Test
     public void test() throws CepiException {

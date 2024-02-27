@@ -107,8 +107,8 @@ public enum UserDAO {
      * @param salt sel
      * @param password mot de passe
      * @return le hash du mot de passe
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException En cas d'erreur de hash
+     * @throws InvalidKeySpecException En cas d'erreur de hash
      */
     private byte[] hashPassword(byte[] salt, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         // Augmenter iteration count pour plus de sécurité
